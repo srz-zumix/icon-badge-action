@@ -2,6 +2,8 @@
 
 Adds various badges to icon files based on user-defined inputs.
 
+This action processes icons using [HazAT/badge](https://github.com/HazAT/badge)
+
 ## Usage
 
 ```yaml
