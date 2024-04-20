@@ -38,4 +38,5 @@ if [ -n "${INPUT_GLOB}" ]; then
   BADGE_OPTIONS+=("--glob" "${INPUT_GLOB}")
 fi
 
+set -x
 badge "${BADGE_OPTIONS[@]}"
