@@ -1,7 +1,5 @@
 FROM ruby:3-slim-bullseye
 
-SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
