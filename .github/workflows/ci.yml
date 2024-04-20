@@ -27,14 +27,57 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: HazAT/badge
-          path: test
+          path: badge
 
-      - name: Test Local Action
-        id: test-action
+      - name: Copy icons
+        run: |
+          mkdir -p test/assets
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_alpha.png
+          cp badge/assets/*175x175.png test/assets/icon_beta.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_beta.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_shield.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_shield_arrange.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_shield_with_badge.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_grayscale.png
+
+      - name: Test Local Action (Alpha)
         uses: ./
         with:
-          glob: test/assets/*.png
+          glob: test/assets/*_alpha.png
+          alpha: true
+
+      - name: Test Local Action (Beta)
+        uses: ./
+        with:
+          glob: test/assets/*_beta.png
+          beta: true
+
+      - name: Test Local Action (shield)
+        uses: ./
+        with:
+          glob: test/assets/*_shield.png
           shield: "icon--badge--action-${{ github.head_ref }}-blue"
+
+      - name: Test Local Action (shield arrange)
+        uses: ./
+        with:
+          glob: test/assets/*_shield_arrange.png
+          shield: "icon--badge--action-${{ github.head_ref }}-green"
+          shield_geometry: "+0+25%"
+          shield_scale: 0.75
+
+      - name: Test Local Action (shield and badge)
+        uses: ./
+        with:
+          glob: test/assets/*_with_badge.png
+          shield: "icon--badge--action-${{ github.head_ref }}-red"
+          beta: true
+
+      - name: Test Local Action (Grayscale)
+        uses: ./
+        with:
+          glob: test/assets/*_grayscale.png
+          grayscale: true
 
       - uses: actions/upload-artifact@v4
         with:

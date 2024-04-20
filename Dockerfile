@@ -6,6 +6,7 @@ RUN apt-get update \
         git \
         wget \
         imagemagick \
+        librsvg2-bin \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
