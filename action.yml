@@ -1,0 +1,43 @@
+name: icon-badge-action
+description: icon add badge action
+author: 'https://github.com/srz-zumix'
+
+inputs:
+  glob:
+    description: 'icon file paths glob pattern (Default: CURRENT_PATH/**/*.appiconset/*.{png,PNG})'
+    default: '' 
+  dark:
+    description: dark mode
+    default: false
+  grayscale:
+    description: make the icon grayscale
+    default: false
+  alpha_channel:
+    description: keep alpha channel
+    default: false
+  alpha:
+    description: add alpha badge
+    default: false
+  beta:
+    description: add beta badge
+    default: false
+  shield:
+    description: add shield static badge string
+    default: ''
+  shield_geometry:
+    description: add shield static badge geometry
+    default: ''
+  shield_scale:
+    description: add shield static badge scale
+    default: ''
+  shield_no_resize:
+    description: add shield static badge no resize
+    default: false
+
+runs:
+  using: docker
+  image: Dockerfile
+
+branding:
+  icon: edit
+  color: orange

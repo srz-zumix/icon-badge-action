@@ -1,0 +1,42 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+
+  test-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+      - name: Checkout test data
+        uses: actions/checkout@v4
+        with:
+          repository: HazAT/badge
+          path: test
+
+      - name: Test Local Action
+        id: test-action
+        uses: ./
+        with:
+          glob: test/assets/*.png
+          shield: "icon--badge--action-${{ github.head_ref }}-blue"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test/assets/*.png
