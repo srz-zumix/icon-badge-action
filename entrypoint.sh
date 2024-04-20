@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+cd "${GITHUB_WORKSPACE}" || exit 1
+
 BADGE_OPTIONS=()
 
 if [ "${INPUT_BETA}" == "false" ]; then
@@ -35,8 +37,7 @@ if [ "${INPUT_SHIELD_NO_RESIZE}" == "true" ]; then
 fi
 
 if [ -n "${INPUT_GLOB}" ]; then
-  BADGE_OPTIONS+=("--glob" "${INPUT_GLOB}")
+  BADGE_OPTIONS+=("--glob" "/${INPUT_GLOB#/}")
 fi
 
-set -x
 badge "${BADGE_OPTIONS[@]}"
