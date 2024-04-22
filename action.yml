@@ -37,6 +37,7 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - uses: docker/setup-buildx-action@v3
   - uses: docker/build-push-action@v5
     id: docker-build
     with:
