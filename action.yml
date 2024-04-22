@@ -35,8 +35,30 @@ inputs:
     default: false
 
 runs:
-  using: docker
-  image: Dockerfile
+  using: "composite"
+  steps:
+  - uses: docker/build-push-action@v5
+    id: docker-build
+    with:
+      context: ${{ github.action_path }}/docker
+      file: ${{ github.action_path }}/docker/Dockerfile
+      push: false
+      load: true
+  - name: Run icon-badge-action
+    shell: bash
+    run: |
+      docker run --rm -v ${{ github.workspace }}:/github/workspace -w /github/workspace ${{ steps.docker-build.outputs.imageid }} \
+        -e INPUT_GLOB="${{ inputs.glob }}" \
+        -e INPUT_DARK="${{ inputs.dark }}" \
+        -e INPUT_GRAYSCALE="${{ inputs.grayscale }}" \
+        -e INPUT_ALPHA_CHANNEL="${{ inputs.alpha_channel }}" \
+        -e INPUT_ALPHA="${{ inputs.alpha }}" \
+        -e INPUT_BETA="${{ inputs.beta }}" \
+        -e INPUT_SHIELD="${{ inputs.shield }}" \
+        -e INPUT_SHIELD_GEOMETRY="${{ inputs.shield_geometry }}" \
+        -e INPUT_SHIELD_SCALE="${{ inputs.shield_scale }}" \
+        -e INPUT_SHIELD_NO_RESIZE="${{ inputs.shield_no_resize }}" \
+        -e GITHUB_WORKSPACE="/github/workspace"
 
 branding:
   icon: edit

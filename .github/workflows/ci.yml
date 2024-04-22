@@ -15,10 +15,39 @@ permissions:
 
 jobs:
 
-  test-action:
+  test-docker-action:
     name: GitHub Actions Test
     runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+      - name: Checkout test data
+        uses: actions/checkout@v4
+        with:
+          repository: HazAT/badge
+          path: badge
+
+      - name: Copy icons
+        run: |
+          mkdir -p test/assets
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_alpha.png
+
+      - name: Test Local Action (Alpha)
+        uses: ./docker
+        with:
+          glob: test/assets/*_alpha.png
+          alpha: true
+
+  test-action:
+    name: GitHub Actions Test
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         id: checkout
