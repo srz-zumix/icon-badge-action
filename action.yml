@@ -54,6 +54,8 @@ runs:
       file: ${{ github.action_path }}/docker/Dockerfile
       push: false
       load: true
+      cache-from: type=gha
+      cache-to: type=gha,mode=max
   - name: Run icon-badge-action
     shell: bash
     env:
