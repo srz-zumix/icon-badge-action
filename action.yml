@@ -56,19 +56,30 @@ runs:
       load: true
   - name: Run icon-badge-action
     shell: bash
+    env:
+      INPUT_GLOB: ${{ inputs.glob }}
+      INPUT_DARK: ${{ inputs.dark }}
+      INPUT_GRAYSCALE: ${{ inputs.grayscale }}
+      INPUT_ALPHA_CHANNEL: ${{ inputs.alpha_channel }}
+      INPUT_ALPHA: ${{ inputs.alpha }}
+      INPUT_BETA: ${{ inputs.beta }}
+      INPUT_SHIELD: ${{ inputs.shield }}
+      INPUT_SHIELD_GEOMETRY: ${{ inputs.shield_geometry }}
+      INPUT_SHIELD_SCALE: ${{ inputs.shield_scale }}
+      INPUT_SHIELD_NO_RESIZE: ${{ inputs.shield_no_resize }}
     run: |
       docker run --rm -v ${{ github.workspace }}:/github/workspace -w /github/workspace ${{ steps.docker-build.outputs.imageid }} \
-        -e INPUT_GLOB="${{ inputs.glob }}" \
-        -e INPUT_DARK="${{ inputs.dark }}" \
-        -e INPUT_GRAYSCALE="${{ inputs.grayscale }}" \
-        -e INPUT_ALPHA_CHANNEL="${{ inputs.alpha_channel }}" \
-        -e INPUT_ALPHA="${{ inputs.alpha }}" \
-        -e INPUT_BETA="${{ inputs.beta }}" \
-        -e INPUT_SHIELD="${{ inputs.shield }}" \
-        -e INPUT_SHIELD_GEOMETRY="${{ inputs.shield_geometry }}" \
-        -e INPUT_SHIELD_SCALE="${{ inputs.shield_scale }}" \
-        -e INPUT_SHIELD_NO_RESIZE="${{ inputs.shield_no_resize }}" \
-        -e GITHUB_WORKSPACE="/github/workspace"
+        -e INPUT_GLOB \
+        -e INPUT_DARK \
+        -e INPUT_GRAYSCALE \
+        -e INPUT_ALPHA_CHANNEL \
+        -e INPUT_ALPHA \
+        -e INPUT_BETA \
+        -e INPUT_SHIELD \
+        -e INPUT_SHIELD_GEOMETRY \
+        -e INPUT_SHIELD_SCALE \
+        -e INPUT_SHIELD_NO_RESIZE \
+        -e GITHUB_WORKSPACE=/github/workspace
 
 branding:
   icon: edit
