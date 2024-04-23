@@ -68,7 +68,7 @@ runs:
       INPUT_SHIELD_SCALE: ${{ inputs.shield_scale }}
       INPUT_SHIELD_NO_RESIZE: ${{ inputs.shield_no_resize }}
     run: |
-      docker run --rm -v ${{ github.workspace }}:/github/workspace -w /github/workspace ${{ steps.docker-build.outputs.imageid }} \
+      docker run --rm -v ${{ github.workspace }}:/github/workspace -w /github/workspace \
         -e INPUT_GLOB \
         -e INPUT_DARK \
         -e INPUT_GRAYSCALE \
@@ -79,8 +79,8 @@ runs:
         -e INPUT_SHIELD_GEOMETRY \
         -e INPUT_SHIELD_SCALE \
         -e INPUT_SHIELD_NO_RESIZE \
-        -e GITHUB_WORKSPACE=/github/workspace
-
+        -e GITHUB_WORKSPACE=/github/workspace \
+        ${{ steps.docker-build.outputs.imageid }}
 branding:
   icon: edit
   color: orange
