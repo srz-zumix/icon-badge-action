@@ -28,7 +28,6 @@ jobs:
         with:
           repository: HazAT/badge
           path: badge
-
       - name: Copy icons
         run: |
           mkdir -p test/assets
@@ -39,6 +38,11 @@ jobs:
         with:
           glob: test/assets/*_alpha.png
           alpha: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results-docker
+          path: test/assets/*.png
 
   test-action:
     name: GitHub Actions Test
@@ -58,7 +62,6 @@ jobs:
         with:
           repository: HazAT/badge
           path: badge
-
       - name: Copy icons
         run: |
           mkdir -p test/assets
@@ -111,5 +114,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-${{ matrix.os }}
           path: test/assets/*.png
