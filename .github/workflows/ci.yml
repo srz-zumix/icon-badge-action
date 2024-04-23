@@ -43,6 +43,7 @@ jobs:
   test-action:
     name: GitHub Actions Test
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
