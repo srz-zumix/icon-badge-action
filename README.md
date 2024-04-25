@@ -4,10 +4,24 @@ Adds various badges to icon files based on user-defined inputs.
 
 This action processes icons using [HazAT/badge](https://github.com/HazAT/badge)
 
+## Supported runner
+
+* Linux
+* macOS
+
 ## Usage
 
 ```yaml
-- uses: srz-zumix/icon-badge-action@v0
+- uses: srz-zumix/icon-badge-action@v1
+  with:
+    glob: test/assets/*_shield.png
+    shield: "icon--badge--action-${{ github.head_ref }}-blue"
+```
+
+If the runner you are running is Linux only, you can also use the docker-action version.
+
+```yaml
+- uses: srz-zumix/icon-badge-action/docker@v1
   with:
     glob: test/assets/*_shield.png
     shield: "icon--badge--action-${{ github.head_ref }}-blue"
