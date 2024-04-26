@@ -50,9 +50,9 @@ jobs:
       fail-fast: false
       matrix:
         labels:
-          - "[ ubuntu-latest ]"
-          - "[ macos, X64 ]"
-          # - "[ windows-latest ]"
+          - '[ "ubuntu-latest" ]'
+          - '[ "macos", "X64" ]'
+          # - '[ "windows-latest" ]'
     runs-on: ${{ fromJson(matrix.labels) }}
     steps:
       - name: Checkout
