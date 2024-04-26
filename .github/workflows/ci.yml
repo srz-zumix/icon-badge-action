@@ -49,11 +49,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        labels:
-          - '[ "ubuntu-latest" ]'
-          - '[ "macos", "X64" ]'
-          # - '[ "windows-latest" ]'
-    runs-on: ${{ fromJson(matrix.labels) }}
+        os:
+          - ubuntu-latest
+          - macos-13
+          # - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         id: checkout
