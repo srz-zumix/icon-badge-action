@@ -64,7 +64,7 @@ jobs:
         id: metadata
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
-          tags:
+          tags: |
             type=raw,value=${{ needs.prepare.outputs.tagname }},enable=true
             type=semver,pattern={{version}},enable=${{ github.ref_type == 'tag' }}
             type=semver,pattern={{major}}.{{minor}},enable=${{ github.ref_type == 'tag' }}
