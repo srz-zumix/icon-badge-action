@@ -64,10 +64,10 @@ jobs:
         id: metadata
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
-          tags:
-            type=raw,value=${{ needs.prepare.outputs.tagname }}
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+          tags: |
+            type=raw,value=${{ needs.prepare.outputs.tagname }},enable=true
+            type=semver,pattern={{version}},enable=${{ github.ref_type == 'tag' }}
+            type=semver,pattern={{major}}.{{minor}},enable=${{ github.ref_type == 'tag' }}
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
