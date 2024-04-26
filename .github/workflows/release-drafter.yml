@@ -11,7 +11,7 @@ permissions:
   # write permission is required for autolabeler
   # otherwise, read permission is required at least
   pull-requests: write
-        
+
 jobs:
   draft_release:
     runs-on: ubuntu-latest
@@ -37,6 +37,13 @@ jobs:
 
   update_semver:
     needs: publish_release
-    uses: srz-zumix/kamidana-action/.github/workflows/update_semver.yml@main
+    uses: ./.github/workflows/update_semver.yml
     with:
       tag: ${{ needs.publish_release.outputs.tag_name }}
+
+  update_docker_image:
+    needs: publish_release
+    uses: ./.github/workflows/reusable-docker-build.yml
+    with:
+      ref: ${{ needs.publish_release.outputs.tag_name }}
+      publish: true
