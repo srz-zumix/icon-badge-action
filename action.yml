@@ -83,6 +83,12 @@ runs:
     with:
       path: ${{ steps.docker.outputs.cachepath }}
       key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachepath }}
+  - name: Docker login
+    uses: docker/login-action@v2
+    with:
+      registry: ghcr.io
+      username: ${{ github.actor }}
+      password: ${{ github.token }}
   - name: Pull and save Docker image
     shell: bash
     env:
