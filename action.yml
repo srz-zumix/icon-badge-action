@@ -67,7 +67,7 @@ runs:
       ACTION_REF: ${{ github.action_ref }}
     run: |
       if [ -z "${{ inputs.docker_image_tag }}" ]; then
-        if [[ "${ACTION_REF:-}" =~ v* ]]; then
+        if [[ "${ACTION_REF:-}" =~ v[0-9]+ ]]; then
           echo "tagname=${ACTION_REF#v}" >> "${GITHUB_OUTPUT}"
         else
           echo "tagname=latest" >> "${GITHUB_OUTPUT}"
