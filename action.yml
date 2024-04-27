@@ -64,34 +64,35 @@ runs:
   #     cache-from: type=gha
   #     cache-to: type=gha,mode=max
 
-    - name: Resolve Docker image tag
-      id: resolve-tag
-      env:
-        ACTION_REF: ${{ github.action_ref }}
-      run: |
-        if [ -z "${{ inputs.docker_image_tag }}" ]; then
-          if [ "${ACTION_REF}" =~ v* ]; then
-            echo "tagname=${ACTION_REF#v}" >> "${GITHUB_OUTPUT}"
-          else
-            echo "tagname=latest" >> "${GITHUB_OUTPUT}"
-          fi
+  - name: Resolve Docker image tag
+    id: resolve-tag
+    shell: baeh
+    env:
+      ACTION_REF: ${{ github.action_ref }}
+    run: |
+      if [ -z "${{ inputs.docker_image_tag }}" ]; then
+        if [ "${ACTION_REF}" =~ v* ]; then
+          echo "tagname=${ACTION_REF#v}" >> "${GITHUB_OUTPUT}"
         else
-          echo "tagname=${{ inputs.docker_image_tag }}" >> "${GITHUB_OUTPUT}"
+          echo "tagname=latest" >> "${GITHUB_OUTPUT}"
         fi
-    - name: Cache Docker image
-      id: cache-image
-      uses: actions/cache@v4
-      with:
-        path: ${{ env.LOCALCACHE_PATH }}
-        key: ${{ runner.os }}-icon-badge-action-${{ env.LOCALCACHE_PATH }}
-    - name: Pull and save Docker image
-      shell: bash
-      env:
-        IMAGE_ID: ${{ env.IMAGE_NAME }}:${{ steps.resolve-tag.outputs.tagname }}
-      run: |
-        docker pull ${IMAGE_ID}
-        docker save ${IMAGE_ID} -o ${{ env.LOCALCACHE_PATH }}
-      if: steps.cache-image.outputs.cache-hit != 'true'
+      else
+        echo "tagname=${{ inputs.docker_image_tag }}" >> "${GITHUB_OUTPUT}"
+      fi
+  - name: Cache Docker image
+    id: cache-image
+    uses: actions/cache@v4
+    with:
+      path: ${{ env.LOCALCACHE_PATH }}
+      key: ${{ runner.os }}-icon-badge-action-${{ env.LOCALCACHE_PATH }}
+  - name: Pull and save Docker image
+    shell: bash
+    env:
+      IMAGE_ID: ${{ env.IMAGE_NAME }}:${{ steps.resolve-tag.outputs.tagname }}
+    run: |
+      docker pull ${IMAGE_ID}
+      docker save ${IMAGE_ID} -o ${{ env.LOCALCACHE_PATH }}
+    if: steps.cache-image.outputs.cache-hit != 'true'
   - name: Load Docker image
     shell: bash
     run: |
