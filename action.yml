@@ -37,10 +37,6 @@ inputs:
     description: 'Docker image tag'
     default: ''
 
-env:
-  IMAGE_NAME: "ghcr.io/srzzumix/icon-badge-action"
-  LOCALCACHE_PATH: local_image_cache
-
 runs:
   using: "composite"
   steps:
@@ -65,7 +61,7 @@ runs:
   #     cache-to: type=gha,mode=max
 
   - name: Resolve Docker image tag
-    id: resolve-tag
+    id: docker
     shell: bash
     env:
       ACTION_REF: ${{ github.action_ref }}
@@ -79,25 +75,26 @@ runs:
       else
         echo "tagname=${{ inputs.docker_image_tag }}" >> "${GITHUB_OUTPUT}"
       fi
+      echo "imagename=ghcr.io/srzzumix/icon-badge-action" >> "${GITHUB_OUTPUT}"
+      echo "cachepath=local_image_cache" >> "${GITHUB_OUTPUT}"
   - name: Cache Docker image
     id: cache-image
     uses: actions/cache@v4
     with:
-      path: ${{ env.LOCALCACHE_PATH }}
-      key: ${{ runner.os }}-icon-badge-action-${{ env.LOCALCACHE_PATH }}
+      path: ${{ steps.docker.outputs.cachepath }}
+      key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachepath }}
   - name: Pull and save Docker image
     shell: bash
     env:
-      IMAGE_ID: ${{ env.IMAGE_NAME }}:${{ steps.resolve-tag.outputs.tagname }}
+      IMAGE_ID: ${{ steps.docker.outputs.imagename }}:${{ steps.docker.outputs.tagname }}
     run: |
       docker pull ${IMAGE_ID}
-      docker save ${IMAGE_ID} -o ${{ env.LOCALCACHE_PATH }}
+      docker save ${IMAGE_ID} -o ${{ steps.docker.outputs.cachepath }}
     if: steps.cache-image.outputs.cache-hit != 'true'
   - name: Load Docker image
     shell: bash
     run: |
-      docker load -i ${{ env.LOCALCACHE_PATH }}
-
+      docker load -i ${{ steps.docker.outputs.cachepath }}
   - name: Run icon-badge-action
     shell: bash
     env:
@@ -112,7 +109,7 @@ runs:
       INPUT_SHIELD_SCALE: ${{ inputs.shield_scale }}
       INPUT_SHIELD_NO_RESIZE: ${{ inputs.shield_no_resize }}
       # IMAGE_ID: ${{ steps.docker-build.outputs.imageid }}
-      IMAGE_ID: ${{ env.IMAGE_NAME }}:${{ steps.resolve-tag.outputs.tagname }}
+      IMAGE_ID: ${{ steps.docker.outputs.imagename }}:${{ steps.docker.outputs.tagname }}
     run: |
       docker run --rm -v ${{ github.workspace }}:/github/workspace -w /github/workspace \
         -e INPUT_GLOB \
