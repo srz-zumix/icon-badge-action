@@ -74,6 +74,8 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          echo "${{ toJSON(steps.metadata.outputs) }}"
       - name: Build and Push Docker images
         uses: docker/build-push-action@v5
         with:
@@ -81,3 +83,4 @@ jobs:
           file: ./docker/Dockerfile
           push: ${{ inputs.publish }}
           tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
