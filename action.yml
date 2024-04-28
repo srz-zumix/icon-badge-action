@@ -75,7 +75,7 @@ runs:
       else
         echo "tagname=${{ inputs.docker_image_tag }}" >> "${GITHUB_OUTPUT}"
       fi
-      echo "imagename=ghcr.io/srzzumix/icon-badge-action" >> "${GITHUB_OUTPUT}"
+      echo "imagename=ghcr.io/srz-zumix/icon-badge-action" >> "${GITHUB_OUTPUT}"
       echo "cachepath=local_image_cache" >> "${GITHUB_OUTPUT}"
   - name: Cache Docker image
     id: cache-image
@@ -88,7 +88,6 @@ runs:
     env:
       IMAGE_ID: ${{ steps.docker.outputs.imagename }}:${{ steps.docker.outputs.tagname }}
     run: |
-      docker logout ghcr.io
       docker pull ${IMAGE_ID}
       docker save ${IMAGE_ID} -o ${{ steps.docker.outputs.cachepath }}
     if: steps.cache-image.outputs.cache-hit != 'true'
