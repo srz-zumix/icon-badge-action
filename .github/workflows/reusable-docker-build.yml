@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tagname: ${{ steps.create_tagname.outputs.tagname }}
+      semver: ${{ steps.create_tagname.outputs.semver }}
     env:
       INPUTS_REF: ${{ inputs.ref || github.head_ref || github.ref }}
     steps:
@@ -39,8 +40,10 @@ jobs:
           NAME=${NAME_3}
           if [ "$NAME" = "main" ]; then
             echo "tagname=latest" >> "${GITHUB_OUTPUT}"
+            echo "semver=false" >> "${GITHUB_OUTPUT}"
           else
             echo "tagname=${NAME}" >> "${GITHUB_OUTPUT}"
+            echo "semver=true" >> "${GITHUB_OUTPUT}"
           fi
       - run: |
           echo ${{ steps.create_tagname.outputs.tagname }}
@@ -66,8 +69,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
           tags: |
             type=raw,value=${{ needs.prepare.outputs.tagname }},enable=true
-            type=semver,pattern={{version}},enable=${{ github.ref_type == 'tag' }}
-            type=semver,pattern={{major}}.{{minor}},enable=${{ github.ref_type == 'tag' }}
+            type=semver,pattern={{version}},enable=${{ needs.prepare.outputs.semver == 'true' }}
+            type=semver,pattern={{major}}.{{minor}},enable=${{ needs.prepare.outputs.semver == 'true' }}
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
