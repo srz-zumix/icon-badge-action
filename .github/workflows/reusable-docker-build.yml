@@ -69,7 +69,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
           tags: |
             type=raw,value=${{ needs.prepare.outputs.tagname }},enable=true
-            type=semver,value=${{ needs.prepare.outputs.tagname }},enable=${{ needs.prepare.outputs.semver == 'true' }}
             type=semver,value=${{ needs.prepare.outputs.tagname }},enable=${{ needs.prepare.outputs.semver == 'true' }},pattern=v{{major}}.{{minor}}.{{patch}}
             type=semver,value=${{ needs.prepare.outputs.tagname }},enable=${{ needs.prepare.outputs.semver == 'true' }},pattern=v{{major}}.{{minor}}
             type=semver,value=${{ needs.prepare.outputs.tagname }},enable=${{ needs.prepare.outputs.semver == 'true' }},pattern=v{{major}}
