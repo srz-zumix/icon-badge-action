@@ -81,7 +81,7 @@ jobs:
           beta: true
 
       - name: Test Local Action (shield)
-        uses: srz-zumix/icon-badge-action@v1.0.1
+        uses: srz-zumix/icon-badge-action@v1.0.2
         with:
           glob: test/assets/*_shield.png
           shield: "icon--badge--action-${{ github.head_ref }}-blue"
