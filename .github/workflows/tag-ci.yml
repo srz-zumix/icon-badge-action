@@ -1,0 +1,92 @@
+name: Tag Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+
+  test-tag-docker-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout test data
+        uses: actions/checkout@v4
+        with:
+          repository: HazAT/badge
+          path: badge
+      - name: Copy icons
+        run: |
+          mkdir -p test/assets
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_alpha.png
+
+      - name: Test Action (Alpha)
+        uses: srz-zumix/icon-badge-action/docker@v1
+        with:
+          glob: test/assets/*_alpha.png
+          alpha: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results-docker
+          path: test/assets/*.png
+
+  test-tag-action:
+    name: GitHub Actions Test
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-13
+          # - windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout test data
+        uses: actions/checkout@v4
+        with:
+          repository: HazAT/badge
+          path: badge
+      - name: Copy icons
+        run: |
+          mkdir -p test/assets
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_alpha.png
+          cp badge/assets/*175x175.png test/assets/icon_beta.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_beta.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_shield.png
+
+      - name: Test Action (Alpha)
+        uses: srz-zumix/icon-badge-action@v1
+        with:
+          glob: test/assets/*_alpha.png
+          alpha: true
+
+      - name: Test Action (Beta)
+        uses: srz-zumix/icon-badge-action@v1.0
+        with:
+          glob: test/assets/*_beta.png
+          beta: true
+
+      - name: Test Local Action (shield)
+        uses: srz-zumix/icon-badge-action@v1.0.2
+        with:
+          glob: test/assets/*_shield.png
+          shield: "icon--badge--action-${{ github.head_ref }}-blue"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}
+          path: test/assets/*.png

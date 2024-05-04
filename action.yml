@@ -70,7 +70,7 @@ runs:
       CACHE_KEY="${ACTION_REF:-}"
       if [ -z "${TAGNAME}" ]; then
         if [[ "${ACTION_REF:-}" =~ v[0-9]+ ]]; then
-          TAGNAME="${ACTION_REF#v}"
+          TAGNAME="${ACTION_REF}"
         else
           TAGNAME=latest
         fi
