@@ -36,6 +36,10 @@ inputs:
   docker_image_tag:
     description: 'Docker image tag'
     default: ''
+  setup_docker_macos:
+    description: 'Setup Docker on macOS if not found docker'
+    default: true
+    type: boolean
 
 runs:
   using: "composite"
@@ -48,7 +52,7 @@ runs:
       echo "exit-code=$?" >> "${GITHUB_OUTPUT}"
     if: runner.os == 'macos'
   - uses: douglascamata/setup-docker-macos-action@v1-alpha
-    if: runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
+    if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
   # - uses: docker/setup-buildx-action@v3
   # - uses: docker/build-push-action@v5
   #   id: docker-build
