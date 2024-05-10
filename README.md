@@ -7,7 +7,7 @@ This action processes icons using [HazAT/badge](https://github.com/HazAT/badge)
 ## Supported runner
 
 * Linux
-* macOS (X64)
+* macOS
 
 ## Usage
 
