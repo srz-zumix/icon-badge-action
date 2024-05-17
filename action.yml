@@ -83,7 +83,7 @@ runs:
         echo "imagename=ghcr.io/srz-zumix/icon-badge-action"
         echo "tagname=${TAGNAME}"
         echo "cachekey=${CACHE_KEY:-${TAGNAME}}"
-        echo "cachepath=${{ runner.temp }}/local_image_cache"
+        echo "cachepath=.local_image_cache"
       } >> "${GITHUB_OUTPUT}"
   - name: Cache Docker image
     id: cache-image
