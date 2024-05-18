@@ -147,5 +147,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: test-results-docker
+          name: test-results-no-cache
           path: test/assets/*.png
