@@ -36,6 +36,10 @@ inputs:
   docker_image_tag:
     description: 'Docker image tag'
     default: ''
+  cache:
+    description: 'Cache Docker image'
+    default: true
+    type: boolean
   setup_docker_macos:
     description: 'Setup Docker on macOS if not found docker'
     default: true
@@ -91,6 +95,7 @@ runs:
     with:
       path: ${{ steps.docker.outputs.cachepath }}
       key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachekey }}
+    if: inputs.cache
   - name: Pull and save Docker image
     shell: bash
     env:

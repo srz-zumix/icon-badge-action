@@ -17,7 +17,7 @@ permissions:
 jobs:
 
   test-docker-action:
-    name: GitHub Actions Test
+    name: Docker Actions Test
     runs-on: ubuntu-latest
 
     steps:
@@ -117,4 +117,35 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.os }}
+          path: test/assets/*.png
+
+  test-no-cache:
+    name: Docker no cache Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+      - name: Checkout test data
+        uses: actions/checkout@v4
+        with:
+          repository: HazAT/badge
+          path: badge
+      - name: Copy icons
+        run: |
+          mkdir -p test/assets
+          cp badge/assets/*175x175.png test/assets/icon_beta.png
+          cp badge/assets/*fitrack.png test/assets/icon_fitrack_beta.png
+
+      - name: Test Local Action (Alpha)
+        uses: ./
+        with:
+          glob: test/assets/*_beta.png
+          beta: true
+          cache: false
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results-no-cache
           path: test/assets/*.png
