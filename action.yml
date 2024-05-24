@@ -111,7 +111,6 @@ runs:
       docker save ${IMAGE_ID} -o ${{ steps.docker.outputs.cachepath }}
     if: steps.cache-image.outputs.cache-hit != 'true'
   - name: Save Cache Docker image
-    id: cache-image
     uses: actions/cache/save@v4
     with:
       path: ${{ steps.docker.outputs.cachepath }}
