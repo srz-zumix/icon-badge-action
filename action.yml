@@ -44,6 +44,12 @@ inputs:
     description: 'Setup Docker on macOS if not found docker'
     default: true
     type: boolean
+  action_ref:
+    description: |
+      A workaround for an issue where action_ref is empty in nested composite actions.
+      Used to resolve docker image tag names.
+      Docker image tags can be specified with docker_image_tag inputs.
+    default: '${{ github.action_ref }}'
 
 runs:
   using: "composite"
@@ -72,7 +78,7 @@ runs:
     id: docker
     shell: bash
     env:
-      ACTION_REF: ${{ github.action_ref }}
+      ACTION_REF: ${{ inputs.action_ref }}
       TAGNAME: ${{ inputs.docker_image_tag }}
     run: |
       CACHE_KEY="${ACTION_REF:-}"
@@ -89,9 +95,9 @@ runs:
         echo "cachekey=${CACHE_KEY:-${TAGNAME}}"
         echo "cachepath=${{ runner.temp }}/local_image_cache"
       } >> "${GITHUB_OUTPUT}"
-  - name: Cache Docker image
+  - name: Restore Cache Docker image
     id: cache-image
-    uses: actions/cache@v4
+    uses: actions/cache/restore@v4
     with:
       path: ${{ steps.docker.outputs.cachepath }}
       key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachekey }}
@@ -104,6 +110,12 @@ runs:
       docker pull ${IMAGE_ID}
       docker save ${IMAGE_ID} -o ${{ steps.docker.outputs.cachepath }}
     if: steps.cache-image.outputs.cache-hit != 'true'
+  - name: Save Cache Docker image
+    uses: actions/cache/save@v4
+    with:
+      path: ${{ steps.docker.outputs.cachepath }}
+      key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachekey }}
+    if: inputs.cache && steps.cache-image.outputs.cache-hit != 'true'
   - name: Load Docker image
     shell: bash
     run: |
