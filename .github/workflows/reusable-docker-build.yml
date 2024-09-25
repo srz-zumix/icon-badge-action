@@ -81,7 +81,7 @@ jobs:
       - run: |
           echo "${{ toJSON(steps.metadata.outputs) }}"
       - name: Build and Push Docker images
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./docker
           file: ./docker/Dockerfile
