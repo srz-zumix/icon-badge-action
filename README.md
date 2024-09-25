@@ -31,7 +31,9 @@ If the runner you are running is Linux only, you can also use the docker-action 
 
 ### `glob`
 
-Specifies the glob pattern for icon file paths. Default is `CURRENT_PATH/**/*.appiconset/*.{png,PNG}`.
+Specifies the glob pattern for icon file paths. Default is an empty string.
+
+If it is an empty string, it will be `CURRENT_PATH/**/*.appiconset/*.{png,PNG}`.
 
 ### `dark`
 
@@ -68,3 +70,7 @@ Adds a shield static badge scale. Default is an empty string.
 ### `shield_no_resize`
 
 Disables resizing of the shield static badge. Default is `false`.
+
+### `cache`
+
+Cache Docker image. Default is `true`.
