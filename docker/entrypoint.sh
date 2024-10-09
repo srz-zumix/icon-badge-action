@@ -37,7 +37,7 @@ if [ "${INPUT_SHIELD_NO_RESIZE}" == "true" ]; then
 fi
 
 if [ -n "${INPUT_GLOB}" ]; then
-  GLOB_PATTERN="${INPUT_GLOB#${INPUT_HOST_GITHUB_WORKSPACE}}"
+  GLOB_PATTERN="${INPUT_GLOB#"${INPUT_HOST_GITHUB_WORKSPACE}"}"
   BADGE_OPTIONS+=("--glob" "/${GLOB_PATTERN#/}")
 fi
 
