@@ -55,6 +55,8 @@ jobs:
           - macos-13
           # - windows-latest
     runs-on: ${{ matrix.os }}
+    env:
+      REF_NAME: ${{ github.head_ref || github.ref_name }}
     steps:
       - name: Checkout
         id: checkout
@@ -91,13 +93,13 @@ jobs:
         uses: ./
         with:
           glob: test/assets/*_shield.png
-          shield: "icon--badge--action-${{ github.head_ref }}-blue"
+          shield: "icon--badge--action-${{ env.REF_NAME }}-blue"
 
       - name: Test Local Action (shield arrange)
         uses: ./
         with:
           glob: test/assets/*_shield_arrange.png
-          shield: "icon--badge--action-${{ github.head_ref }}-green"
+          shield: "icon--badge--action-${{ env.REF_NAME }}-green"
           shield_geometry: "+0+25%"
           shield_scale: 0.75
 
@@ -105,7 +107,7 @@ jobs:
         uses: ./
         with:
           glob: test/assets/*_with_badge.png
-          shield: "icon--badge--action-${{ github.head_ref }}-red"
+          shield: "icon--badge--action-${{ env.REF_NAME }}-red"
           beta: true
 
       - name: Test Local Action (Grayscale)
