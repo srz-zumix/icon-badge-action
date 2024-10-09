@@ -80,7 +80,7 @@ jobs:
       - name: Test Local Action (Alpha)
         uses: ./
         with:
-          glob: test/assets/*_alpha.png
+          glob: "${{ github.workspace }}/test/assets/*_alpha.png"
           alpha: true
 
       - name: Test Local Action (Beta)
