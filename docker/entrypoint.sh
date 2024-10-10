@@ -37,7 +37,8 @@ if [ "${INPUT_SHIELD_NO_RESIZE}" == "true" ]; then
 fi
 
 if [ -n "${INPUT_GLOB}" ]; then
-  BADGE_OPTIONS+=("--glob" "/${INPUT_GLOB#/}")
+  GLOB_PATTERN="${INPUT_GLOB#"${INPUT_HOST_GITHUB_WORKSPACE}"}"
+  BADGE_OPTIONS+=("--glob" "/${GLOB_PATTERN#/}")
 fi
 
 badge "${BADGE_OPTIONS[@]}"

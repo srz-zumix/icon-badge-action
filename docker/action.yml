@@ -33,6 +33,9 @@ inputs:
   shield_no_resize:
     description: add shield static badge no resize
     default: false
+  host_github_workspace:
+    description: host gitHub workspace
+    default: '${{ github.workspace }}'
 
 runs:
   using: docker
