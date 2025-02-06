@@ -6,7 +6,6 @@ updates:
       interval: weekly
     ignore:
       - dependency-name: "srz-zumix/icon-badge-action"
-        versions: ["*"]
         update-types:
           - "version-update:semver-minor"
     groups:
