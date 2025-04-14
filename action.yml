@@ -63,16 +63,8 @@ runs:
     if: runner.os == 'macos'
   - uses: docker/setup-docker-action@v4
     if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
-  # - uses: docker/setup-buildx-action@v3
-  # - uses: docker/build-push-action@v5
-  #   id: docker-build
-  #   with:
-  #     context: ${{ github.action_path }}/docker
-  #     file: ${{ github.action_path }}/docker/Dockerfile
-  #     push: false
-  #     load: true
-  #     cache-from: type=gha
-  #     cache-to: type=gha,mode=max
+    with:
+      rootless: true
 
   - name: Resolve Docker image tag
     id: docker
