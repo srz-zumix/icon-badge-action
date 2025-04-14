@@ -63,8 +63,8 @@ runs:
     if: runner.os == 'macos'
   - uses: docker/setup-docker-action@v4
     if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
-    with:
-      rootless: true
+    # with:
+    #   rootless: true
 
   - name: Resolve Docker image tag
     id: docker
@@ -128,7 +128,7 @@ runs:
       # IMAGE_ID: ${{ steps.docker-build.outputs.imageid }}
       IMAGE_ID: ${{ steps.docker.outputs.imagename }}:${{ steps.docker.outputs.tagname }}
     run: |
-      docker run --rm -v ${{ github.workspace }}:/github/workspace -w /github/workspace \
+      docker run --rm -u "$(id -u):$(id -g)" -v ${{ github.workspace }}:/github/workspace -w /github/workspace \
         -e INPUT_GLOB \
         -e INPUT_DARK \
         -e INPUT_GRAYSCALE \
