@@ -61,7 +61,7 @@ runs:
       which docker
       echo "exit-code=$?" >> "${GITHUB_OUTPUT}"
     if: runner.os == 'macos'
-  - uses: douglascamata/setup-docker-macos-action@v1-alpha
+  - uses: douglascamata/setup-docker-macos-action@v1.0.0
     if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
   # - uses: docker/setup-buildx-action@v3
   # - uses: docker/build-push-action@v5
