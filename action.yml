@@ -128,7 +128,7 @@ runs:
       # IMAGE_ID: ${{ steps.docker-build.outputs.imageid }}
       IMAGE_ID: ${{ steps.docker.outputs.imagename }}:${{ steps.docker.outputs.tagname }}
     run: |
-      docker run --rm -v ${{ github.workspace }}:/github/workspace -w /github/workspace \
+      docker run --rm -v ${{ github.workspace }}:${{ github.workspace }} -w ${{ github.workspace }} \
         -e INPUT_GLOB \
         -e INPUT_DARK \
         -e INPUT_GRAYSCALE \
@@ -140,7 +140,7 @@ runs:
         -e INPUT_SHIELD_SCALE \
         -e INPUT_SHIELD_NO_RESIZE \
         -e INPUT_HOST_GITHUB_WORKSPACE=${{ github.workspace }} \
-        -e GITHUB_WORKSPACE=/github/workspace \
+        -e GITHUB_WORKSPACE=${{ github.workspace }} \
         "${IMAGE_ID}"
 
 branding:
