@@ -61,18 +61,10 @@ runs:
       which docker
       echo "exit-code=$?" >> "${GITHUB_OUTPUT}"
     if: runner.os == 'macos'
-  - uses: douglascamata/setup-docker-macos-action@v1-alpha
+  - uses: docker/setup-docker-action@v4
+    env:
+      LIMA_START_ARGS: --mount-writable
     if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
-  # - uses: docker/setup-buildx-action@v3
-  # - uses: docker/build-push-action@v5
-  #   id: docker-build
-  #   with:
-  #     context: ${{ github.action_path }}/docker
-  #     file: ${{ github.action_path }}/docker/Dockerfile
-  #     push: false
-  #     load: true
-  #     cache-from: type=gha
-  #     cache-to: type=gha,mode=max
 
   - name: Resolve Docker image tag
     id: docker
