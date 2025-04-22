@@ -34,7 +34,7 @@ jobs:
           cp badge/assets/*fitrack.png test/assets/icon_fitrack_alpha.png
 
       - name: Test Action (Alpha)
-        uses: srz-zumix/icon-badge-action/docker@v1
+        uses: srz-zumix/icon-badge-action/docker@a62bf466ad32f42515fa9df14bf99e79c4582df4 # v1.1.1
         with:
           glob: test/assets/*_alpha.png
           alpha: true
