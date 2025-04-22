@@ -61,14 +61,17 @@ runs:
       which docker
       echo "exit-code=$?" >> "${GITHUB_OUTPUT}"
     if: runner.os == 'macos'
-  - uses: docker/setup-docker-action@v4
-    if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
-    # with:
-    #   rootless: true
-  - name: Change workspace permission
+  - name: Set workspace permission for lima
     shell: bash
     run: |
-      chmod -R 755 ${{ github.workspace }}
+      mkdir -p ~/.lima/default
+      echo <<EOF > ~/.lima/default/lima.yaml
+      mounts:
+      - location: "${{ github.workspace }}"
+        writable: true
+      EOF
+    if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
+  - uses: docker/setup-docker-action@v4
     if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
 
   - name: Resolve Docker image tag
