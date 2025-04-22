@@ -63,7 +63,7 @@ runs:
     if: runner.os == 'macos'
   - uses: docker/setup-docker-action@v4
     env:
-      LIMA_START_ARGS: --mount ${{ github.workspace }}:w
+      LIMA_START_ARGS: --mount="${{ github.workspace }}:w
     if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
 
   - name: Resolve Docker image tag
