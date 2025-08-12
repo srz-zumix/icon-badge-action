@@ -23,9 +23,9 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Checkout test data
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: HazAT/badge
           path: badge
@@ -60,9 +60,9 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Checkout test data
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: HazAT/badge
           path: badge
@@ -128,9 +128,9 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Checkout test data
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: HazAT/badge
           path: badge
