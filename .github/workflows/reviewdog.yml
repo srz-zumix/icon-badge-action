@@ -2,16 +2,19 @@ name: reviewdog
 on:
   pull_request:
 
-permissions:
-  checks: write
-  contents: read
-  pull-requests: write
-    
+permissions: {}
+
 jobs:
   shellcheck:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - uses: reviewdog/action-shellcheck@1bb9751763fdfbee4b5043772c37374f103bff9e # v1.31.0
         with:
           github_token: ${{ secrets.github_token }}
@@ -22,8 +25,14 @@ jobs:
 
   actionlint:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - uses: reviewdog/action-actionlint@e37e2ca68a70112d21e135229272da28ce2d0d5a # v1.66.1
         with:
           reporter: github-pr-review
