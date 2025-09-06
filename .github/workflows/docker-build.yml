@@ -7,9 +7,7 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-  packages: write
+permissions: {}
 
 jobs:
   docker-build:

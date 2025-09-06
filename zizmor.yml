@@ -1,0 +1,8 @@
+rules:
+  unpinned-uses:
+    ignore:
+      - tag-ci.yml
+
+  secrets-inherit:
+    ignore:
+      - docker-build.yml
