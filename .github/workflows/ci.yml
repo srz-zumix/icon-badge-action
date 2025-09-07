@@ -24,11 +24,14 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - name: Checkout test data
         uses: actions/checkout@v5
         with:
           repository: HazAT/badge
           path: badge
+          persist-credentials: false
       - name: Copy icons
         run: |
           mkdir -p test/assets
@@ -61,11 +64,14 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - name: Checkout test data
         uses: actions/checkout@v5
         with:
           repository: HazAT/badge
           path: badge
+          persist-credentials: false
       - name: Copy icons
         run: |
           mkdir -p test/assets
@@ -129,11 +135,14 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - name: Checkout test data
         uses: actions/checkout@v5
         with:
           repository: HazAT/badge
           path: badge
+          persist-credentials: false
       - name: Copy icons
         run: |
           mkdir -p test/assets

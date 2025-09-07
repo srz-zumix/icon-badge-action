@@ -98,9 +98,10 @@ runs:
     shell: bash
     env:
       IMAGE_ID: ${{ steps.docker.outputs.imagename }}:${{ steps.docker.outputs.tagname }}
+      CACHE_PATH: ${{ steps.docker.outputs.cachepath }}
     run: |
       docker pull ${IMAGE_ID}
-      docker save ${IMAGE_ID} -o ${{ steps.docker.outputs.cachepath }}
+      docker save ${IMAGE_ID} -o "${CACHE_PATH}"
     if: steps.cache-image.outputs.cache-hit != 'true'
   - name: Save Cache Docker image
     uses: actions/cache/save@v4
@@ -110,8 +111,10 @@ runs:
     if: inputs.cache && steps.cache-image.outputs.cache-hit != 'true'
   - name: Load Docker image
     shell: bash
+    env:
+      CACHE_PATH: ${{ steps.docker.outputs.cachepath }}
     run: |
-      docker load -i ${{ steps.docker.outputs.cachepath }}
+      docker load -i "${CACHE_PATH}"
   - name: Run icon-badge-action
     shell: bash
     env:
