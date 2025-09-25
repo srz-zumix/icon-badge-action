@@ -39,12 +39,17 @@ jobs:
   update_semver:
     needs: publish_release
     uses: ./.github/workflows/update_semver.yml
+    permissions:
+      contents: write
     with:
       tag: ${{ needs.publish_release.outputs.tag_name }}
 
   update_docker_image:
     needs: publish_release
     uses: ./.github/workflows/reusable-docker-build.yml
+    permissions:
+      contents: read
+      packages: write
     with:
       ref: ${{ needs.publish_release.outputs.tag_name }}
       publish: true
