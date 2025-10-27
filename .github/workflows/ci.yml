@@ -43,7 +43,7 @@ jobs:
           glob: "${{ github.workspace }}/test/assets/*_alpha.png"
           alpha: true
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: test-results-docker
           path: test/assets/*.png
@@ -122,7 +122,7 @@ jobs:
           glob: test/assets/*_grayscale.png
           grayscale: true
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: test-results-${{ matrix.os }}
           path: test/assets/*.png
@@ -156,7 +156,7 @@ jobs:
           beta: true
           cache: false
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: test-results-no-cache
           path: test/assets/*.png
