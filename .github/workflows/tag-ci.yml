@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout test data
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: HazAT/badge
           path: badge
@@ -40,7 +40,7 @@ jobs:
           glob: test/assets/*_alpha.png
           alpha: true
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: test-results-docker
           path: test/assets/*.png
@@ -57,7 +57,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout test data
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: HazAT/badge
           path: badge
@@ -88,7 +88,7 @@ jobs:
           glob: test/assets/*_shield.png
           shield: "icon--badge--action-${{ github.head_ref }}-blue"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: test-results-${{ matrix.os }}
           path: test/assets/*.png
