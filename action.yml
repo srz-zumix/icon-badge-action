@@ -61,7 +61,7 @@ runs:
       which docker
       echo "exit-code=$?" >> "${GITHUB_OUTPUT}"
     if: runner.os == 'macos'
-  - uses: docker/setup-docker-action@b60f85385d03ac8acfca6d9996982511d8620a19 # v4.3.0
+  - uses: docker/setup-docker-action@e61617a16c407a86262fb923c35a616ddbe070b3 # v4.6.0
     env:
       LIMA_START_ARGS: --mount-writable
     if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
@@ -89,7 +89,7 @@ runs:
       } >> "${GITHUB_OUTPUT}"
   - name: Restore Cache Docker image
     id: cache-image
-    uses: actions/cache/restore@v4
+    uses: actions/cache/restore@v5
     with:
       path: ${{ steps.docker.outputs.cachepath }}
       key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachekey }}
@@ -104,7 +104,7 @@ runs:
       docker save ${IMAGE_ID} -o "${CACHE_PATH}"
     if: steps.cache-image.outputs.cache-hit != 'true'
   - name: Save Cache Docker image
-    uses: actions/cache/save@v4
+    uses: actions/cache/save@v5
     with:
       path: ${{ steps.docker.outputs.cachepath }}
       key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachekey }}
