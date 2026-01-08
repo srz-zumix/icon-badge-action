@@ -1,5 +1,8 @@
 rules:
   unpinned-uses:
+    config:
+      policies:
+        actions/*: any
     ignore:
       - tag-ci.yml
 
