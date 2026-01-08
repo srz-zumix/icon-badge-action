@@ -19,7 +19,6 @@ permissions:
 jobs:
 
   test-tag-docker-action:
-    name: GitHub Actions Test
     runs-on: ubuntu-latest
 
     steps:
@@ -46,13 +45,13 @@ jobs:
           path: test/assets/*.png
 
   test-tag-action:
-    name: GitHub Actions Test
     strategy:
       fail-fast: false
       matrix:
         os:
           - ubuntu-latest
-          - macos-13
+          # - macos-15
+          - macos-15-intel
           # - windows-latest
     runs-on: ${{ matrix.os }}
     steps:
