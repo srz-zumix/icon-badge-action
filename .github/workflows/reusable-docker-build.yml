@@ -65,11 +65,11 @@ jobs:
       REGISTRY: ghcr.io
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref || github.ref }}
           persist-credentials: false
-      - uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
+      - uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
         id: metadata
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}
