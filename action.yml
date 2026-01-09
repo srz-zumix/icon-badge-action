@@ -64,7 +64,7 @@ runs:
   - uses: docker/setup-docker-action@e43656e248c0bd0647d3f5c195d116aacf6fcaf4 # v4.7.0
     env:
       LIMA_START_ARGS: --mount-writable
-    if: inputs.setup_docker_macos && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
+    if: inputs.setup_docker_macos == 'true' && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
 
   - name: Resolve Docker image tag
     id: docker
