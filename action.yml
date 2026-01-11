@@ -89,7 +89,7 @@ runs:
       } >> "${GITHUB_OUTPUT}"
   - name: Restore Cache Docker image
     id: cache-image
-    uses: actions/cache/restore@v4
+    uses: actions/cache/restore@v5
     with:
       path: ${{ steps.docker.outputs.cachepath }}
       key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachekey }}
@@ -104,7 +104,7 @@ runs:
       docker save ${IMAGE_ID} -o "${CACHE_PATH}"
     if: steps.cache-image.outputs.cache-hit != 'true'
   - name: Save Cache Docker image
-    uses: actions/cache/save@v4
+    uses: actions/cache/save@v5
     with:
       path: ${{ steps.docker.outputs.cachepath }}
       key: ${{ runner.os }}-icon-badge-action-${{ steps.docker.outputs.cachekey }}
