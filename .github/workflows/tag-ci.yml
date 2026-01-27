@@ -34,7 +34,7 @@ jobs:
           cp badge/assets/*fitrack.png test/assets/icon_fitrack_alpha.png
 
       - name: Test Action (Alpha)
-        uses: srz-zumix/icon-badge-action/docker@a62bf466ad32f42515fa9df14bf99e79c4582df4 # v1.1.1
+        uses: srz-zumix/icon-badge-action/docker@6bf51c818b61e9c5b391a5cfd258cc8208756fae # v2.0.0
         with:
           glob: test/assets/*_alpha.png
           alpha: true
@@ -70,19 +70,19 @@ jobs:
           cp badge/assets/*fitrack.png test/assets/icon_fitrack_shield.png
 
       - name: Test Action (Alpha)
-        uses: srz-zumix/icon-badge-action@v1
+        uses: srz-zumix/icon-badge-action@v2
         with:
           glob: test/assets/*_alpha.png
           alpha: true
 
       - name: Test Action (Beta)
-        uses: srz-zumix/icon-badge-action@v1.0
+        uses: srz-zumix/icon-badge-action@v2.0
         with:
           glob: test/assets/*_beta.png
           beta: true
 
       - name: Test Local Action (shield)
-        uses: srz-zumix/icon-badge-action@v1.0.2
+        uses: srz-zumix/icon-badge-action@v2.0.0
         with:
           glob: test/assets/*_shield.png
           shield: "icon--badge--action-${{ github.head_ref }}-blue"
