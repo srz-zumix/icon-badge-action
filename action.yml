@@ -39,11 +39,9 @@ inputs:
   cache:
     description: 'Cache Docker image'
     default: true
-    type: boolean
   setup_docker_macos:
     description: 'Setup Docker on macOS if not found docker'
     default: true
-    type: boolean
   action_ref:
     description: |
       A workaround for an issue where action_ref is empty in nested composite actions.
