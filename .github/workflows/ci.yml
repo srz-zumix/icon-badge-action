@@ -23,11 +23,11 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Checkout test data
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: HazAT/badge
           path: badge
@@ -64,11 +64,11 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Checkout test data
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: HazAT/badge
           path: badge
@@ -135,11 +135,11 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Checkout test data
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: HazAT/badge
           path: badge
