@@ -59,7 +59,7 @@ runs:
       which docker
       echo "exit-code=$?" >> "${GITHUB_OUTPUT}"
     if: runner.os == 'macos'
-  - uses: docker/setup-docker-action@77e84dbf09b47d1e29270283c22f16145aa85ca1 # v5.4.0
+  - uses: docker/setup-docker-action@7ec28a010822b4626af4874f9448a4b05ac6f3e5 # v5.6.0
     env:
       LIMA_START_ARGS: --mount-writable
     if: inputs.setup_docker_macos == 'true' && runner.os == 'macos' && steps.check-docker.outputs.exit-code != '0'
